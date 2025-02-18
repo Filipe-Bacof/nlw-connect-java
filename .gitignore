@@ -1,0 +1,60 @@
+# Diretórios e arquivos gerados pelo Maven
+/target/
+/mvnw
+/mvnw.cmd
+/.mvn/
+
+# Diretórios do IntelliJ IDEA
+/.idea/
+*.iml
+*.iws
+
+# Diretórios do Eclipse
+/.classpath
+/.project
+/.settings/
+
+# Diretórios do VS Code
+/.vscode/
+
+# Arquivos de log
+*.log
+
+# Configurações do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Credenciais e configurações sensíveis
+*.env
+application.properties
+application.yml
+application-*.properties
+application-*.yml
+
+# Arquivos gerados pelo Spring Boot
+/BOOT-INF/
+/META-INF/
+/org/
+
+# Dependências baixadas manualmente
+/lib/
+
+# Arquivos do banco de dados
+*.db
+*.sqlite
+
+# Arquivos temporários e caches
+*.swp
+*.swo
+*.bak
+
+# Arquivos de build
+/build/
+
+# Test Reports
+test-output/
+/reports/
+
+# Arquivos de IDEs
+/out/
+*.class
