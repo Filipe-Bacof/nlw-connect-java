@@ -1,0 +1,43 @@
+{
+	"info": {
+		"_postman_id": "d7de51ed-e2f7-4c81-96e0-db410d70545d",
+		"name": "NLW_Connect",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38951864"
+	},
+	"item": [
+		{
+			"name": "Event",
+			"item": [
+				{
+					"name": "New Event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Imersão Java Inverno 2025\",\r\n    \"location\": \"Online\",\r\n    \"price\": 0.0,\r\n    \"startDate\": \"2025-06-01\",\r\n    \"endDate\": \"2025-06-03\",\r\n    \"startTime\": \"19:00:00\",\r\n    \"endTime\": \"22:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/events",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
