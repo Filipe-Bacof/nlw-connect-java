@@ -3,6 +3,8 @@ package br.com.bacof.nlw_connect.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.bacof.nlw_connect.exception.EventNotFoundException;
+import br.com.bacof.nlw_connect.exception.SubscriptionConflictException;
 import br.com.bacof.nlw_connect.model.Event;
 import br.com.bacof.nlw_connect.model.Subscription;
 import br.com.bacof.nlw_connect.model.User;
@@ -24,11 +26,22 @@ public class SubscriptionService {
 	
 	public Subscription createNewSubscription(String eventName, User user) {
 		Event event = eventRepo.findByPrettyName(eventName);
-		user = userRepo.save(user);
-		
+		if (event == null) {
+			throw new EventNotFoundException("Evento "+eventName+" não existe");
+		}
+		User recoveredUser = userRepo.findByEmail(user.getEmail());
+		if (recoveredUser == null) {
+			recoveredUser = userRepo.save(user);
+		}
+
 		Subscription subscription = new Subscription();
 		subscription.setEvent(event);
-		subscription.setSubscriber(user);
+		subscription.setSubscriber(recoveredUser);
+		
+		Subscription temporarySubscription = subscriptionRepo.findByEventAndSubscriber(event, recoveredUser);
+		if (temporarySubscription != null) {
+			throw new SubscriptionConflictException("Já existe inscrição para o usuário "+recoveredUser.getName()+" no evento "+event.getTitle());
+		}
 		
 		Subscription result = subscriptionRepo.save(subscription);
 		return result;
