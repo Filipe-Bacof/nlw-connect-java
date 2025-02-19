@@ -3,6 +3,7 @@ package br.com.bacof.nlw_connect.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.bacof.nlw_connect.dto.SubscriptionResponse;
 import br.com.bacof.nlw_connect.exception.EventNotFoundException;
 import br.com.bacof.nlw_connect.exception.SubscriptionConflictException;
 import br.com.bacof.nlw_connect.model.Event;
@@ -24,7 +25,7 @@ public class SubscriptionService {
 	@Autowired
 	private SubscriptionRepo subscriptionRepo;
 	
-	public Subscription createNewSubscription(String eventName, User user) {
+	public SubscriptionResponse createNewSubscription(String eventName, User user) {
 		Event event = eventRepo.findByPrettyName(eventName);
 		if (event == null) {
 			throw new EventNotFoundException("Evento "+eventName+" não existe");
@@ -44,6 +45,6 @@ public class SubscriptionService {
 		}
 		
 		Subscription result = subscriptionRepo.save(subscription);
-		return result;
+		return new SubscriptionResponse(result.getSubscriptionNumber(), "https://codecraft.com/"+result.getEvent().getPrettyName()+"/"+result.getSubscriber().getId());
 	}
 }
