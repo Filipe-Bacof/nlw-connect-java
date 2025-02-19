@@ -1,8 +1,11 @@
 package br.com.bacof.nlw_connect.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.bacof.nlw_connect.dto.SubscriptionRankingItem;
 import br.com.bacof.nlw_connect.dto.SubscriptionResponse;
 import br.com.bacof.nlw_connect.exception.EventNotFoundException;
 import br.com.bacof.nlw_connect.exception.SubscriptionConflictException;
@@ -55,5 +58,14 @@ public class SubscriptionService {
 		
 		Subscription result = subscriptionRepo.save(subscription);
 		return new SubscriptionResponse(result.getSubscriptionNumber(), "https://codecraft.com/subscription/"+result.getEvent().getPrettyName()+"/"+result.getSubscriber().getId());
+	}
+	
+	public List<SubscriptionRankingItem> getCompleteRanking(String prettyName) {
+		Event event = eventRepo.findByPrettyName(prettyName);
+		if (event == null) {
+			throw new EventNotFoundException("Ranking do evento "+prettyName+" não existe");
+		}
+		
+		return subscriptionRepo.generateRanking(event.getEventId());
 	}
 }

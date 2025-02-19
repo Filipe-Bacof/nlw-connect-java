@@ -139,6 +139,27 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Ranking",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/subscription/codecraft-summit-2025/ranking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"subscription",
+								"codecraft-summit-2025",
+								"ranking"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
