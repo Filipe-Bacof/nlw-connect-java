@@ -62,7 +62,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/events/imersao-java-inverno-2026",
+							"raw": "http://localhost:8080/events/codecraft-summit-2025",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -70,7 +70,41 @@
 							"port": "8080",
 							"path": [
 								"events",
-								"imersao-java-inverno-2026"
+								"codecraft-summit-2025"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subscription",
+			"item": [
+				{
+					"name": "Create Subscription",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Filipe Bacof\",\r\n    \"email\": \"filipebacof@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/subscription/codecraft-summit-2025",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"subscription",
+								"codecraft-summit-2025"
 							]
 						}
 					},
