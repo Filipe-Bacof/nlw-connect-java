@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import br.com.bacof.nlw_connect.dto.SubscriptionResponse;
 import br.com.bacof.nlw_connect.exception.EventNotFoundException;
 import br.com.bacof.nlw_connect.exception.SubscriptionConflictException;
+import br.com.bacof.nlw_connect.exception.UserIndicatorNotFoundException;
 import br.com.bacof.nlw_connect.model.Event;
 import br.com.bacof.nlw_connect.model.Subscription;
 import br.com.bacof.nlw_connect.model.User;
@@ -25,7 +26,7 @@ public class SubscriptionService {
 	@Autowired
 	private SubscriptionRepo subscriptionRepo;
 	
-	public SubscriptionResponse createNewSubscription(String eventName, User user) {
+	public SubscriptionResponse createNewSubscription(String eventName, User user, Integer userId) {
 		Event event = eventRepo.findByPrettyName(eventName);
 		if (event == null) {
 			throw new EventNotFoundException("Evento "+eventName+" não existe");
@@ -34,10 +35,16 @@ public class SubscriptionService {
 		if (recoveredUser == null) {
 			recoveredUser = userRepo.save(user);
 		}
+		
+		User indicator = userRepo.findById(userId).orElse(null);
+		if (indicator == null) {
+			throw new UserIndicatorNotFoundException("Usuário "+userId+" indicador não existe");
+		}
 
 		Subscription subscription = new Subscription();
 		subscription.setEvent(event);
 		subscription.setSubscriber(recoveredUser);
+		subscription.setIndication(indicator);
 		
 		Subscription temporarySubscription = subscriptionRepo.findByEventAndSubscriber(event, recoveredUser);
 		if (temporarySubscription != null) {
@@ -45,6 +52,6 @@ public class SubscriptionService {
 		}
 		
 		Subscription result = subscriptionRepo.save(subscription);
-		return new SubscriptionResponse(result.getSubscriptionNumber(), "https://codecraft.com/"+result.getEvent().getPrettyName()+"/"+result.getSubscriber().getId());
+		return new SubscriptionResponse(result.getSubscriptionNumber(), "https://codecraft.com/subscription/"+result.getEvent().getPrettyName()+"/"+result.getSubscriber().getId());
 	}
 }

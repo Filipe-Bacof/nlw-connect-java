@@ -11,6 +11,7 @@ import br.com.bacof.nlw_connect.dto.ErrorMessage;
 import br.com.bacof.nlw_connect.dto.SubscriptionResponse;
 import br.com.bacof.nlw_connect.exception.EventNotFoundException;
 import br.com.bacof.nlw_connect.exception.SubscriptionConflictException;
+import br.com.bacof.nlw_connect.exception.UserIndicatorNotFoundException;
 import br.com.bacof.nlw_connect.model.Subscription;
 import br.com.bacof.nlw_connect.model.User;
 import br.com.bacof.nlw_connect.service.SubscriptionService;
@@ -21,10 +22,14 @@ public class SubscriptionController {
 	@Autowired
 	private SubscriptionService service;
 	
-	@PostMapping("/subscription/{prettyName}")
-	public ResponseEntity<?> createSubscription (@PathVariable String prettyName, @RequestBody User subscriber) {
+	@PostMapping({"/subscription/{prettyName}", "/subscription/{prettyName}/{userId}"})
+	public ResponseEntity<?> createSubscription (
+		@PathVariable String prettyName,
+		@RequestBody User subscriber,
+		@PathVariable(required = false) Integer userId
+	) {
 		try {
-			SubscriptionResponse result = service.createNewSubscription(prettyName, subscriber);
+			SubscriptionResponse result = service.createNewSubscription(prettyName, subscriber, userId);
 			if (result != null) {
 				return ResponseEntity.ok(result);
 			}
@@ -32,6 +37,8 @@ public class SubscriptionController {
 			return ResponseEntity.status(404).body(new ErrorMessage(exception.getMessage()));
 		} catch (SubscriptionConflictException exception) {
 			return ResponseEntity.status(409).body(new ErrorMessage(exception.getMessage()));
+		} catch (UserIndicatorNotFoundException exception) {
+			return ResponseEntity.status(404).body(new ErrorMessage(exception.getMessage()));
 		}
 		return ResponseEntity.badRequest().build();
 	}
