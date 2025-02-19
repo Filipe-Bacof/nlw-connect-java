@@ -88,7 +88,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Filipe Bacof\",\r\n    \"email\": \"filipebacof@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Rafael Mahl\",\r\n    \"email\": \"rafaelmahl@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -105,6 +105,36 @@
 							"path": [
 								"subscription",
 								"codecraft-summit-2025"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Subscription with Indication",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Dieli Vargas\",\r\n    \"email\": \"dielivargas@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/subscription/codecraft-summit-2025/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"subscription",
+								"codecraft-summit-2025",
+								"1"
 							]
 						}
 					},
